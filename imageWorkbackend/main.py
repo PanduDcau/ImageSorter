@@ -107,7 +107,7 @@ BELL_PEPPER_MAGNESIUM_MODEL_LABELS_PATH = 'models/bellpepper_initial_model_label
 BELL_PEPPER_POWDERY_MODEL_PATH = 'models/bellpepper_initial_severe_model.h5'
 BELL_PEPPER_POWDERY_MODEL_LABELS_PATH = 'models/bellpepper_initial_severe_model_labels.txt'
 
-rf = Roboflow(api_key="zpJpqip0iN5TpMWJPaM2")
+rf = Roboflow(api_key="#")
 project = rf.workspace().project("pepper-segmentation")
 model = project.version(1).model
 
