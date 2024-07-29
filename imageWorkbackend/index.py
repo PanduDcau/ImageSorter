@@ -2,11 +2,11 @@ import os
 from flask import render_template, request, jsonify
 from werkzeug.utils import secure_filename
 from app import app
-from main import getAppleClPrediction, getAppleShPrediction, getAppleSiPrediction, getStrawberryClPrediction, getStrawberryShPrediction, getStrawberrySiPrediction, getStrawberrySurPrediction, \
+from main import getAppleClPrediction, getAppleShPrediction, getAppleSiPrediction, getStrawberryClPrediction, \
+    getStrawberryShPrediction, getStrawberrySiPrediction, getStrawberrySurPrediction, \
     getMangoClPrediction, getMangoShPrediction, getMangoSiPrediction, getMangoSurPrediction, \
     getBellPepperDisPrediction, getBellPepperHealthPrediction, getBellPepperMagPrediction, getBellPepperPowPrediction, \
     get_image_metadata, get_papaw_count, get_bellpepper_count
-
 
 @app.route('/', methods=['GET'])
 def index():
@@ -126,7 +126,7 @@ def submit_msur(subcategory):
 
 
 @app.route('/predictBellPepperDis', methods=['POST'])
-def submit_bpd():
+def submit_dis():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
@@ -135,7 +135,7 @@ def submit_bpd():
 
 
 @app.route('/predictBellPepperHealth', methods=['POST'])
-def submit_bph():
+def submit_health():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
@@ -144,7 +144,7 @@ def submit_bph():
 
 
 @app.route('/predictBellPepperMag', methods=['POST'])
-def submit_bpm():
+def submit_mag():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
@@ -153,7 +153,7 @@ def submit_bpm():
 
 
 @app.route('/predictBellPepperPow', methods=['POST'])
-def submit_bpp():
+def submit_pow():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
@@ -161,16 +161,16 @@ def submit_bpp():
     return jsonify({'label': label, 'probability': acc})
 
 
-@app.route('/getImageMetadata', methods=['POST'])
-def submit_metadata():
+@app.route('/predictPepperCount', methods=['POST'])
+def submit_pepper_count():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
-    metadata = get_image_metadata(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    return jsonify({'metadata': metadata})
+    count = get_bellpepper_count(filename)
+    return jsonify({'count': count})
 
 
-@app.route('/predictPapawSeedCount', methods=['POST'])
+@app.route('/predictPapawCount', methods=['POST'])
 def submit_papaw_count():
     filename, error = handle_file_upload(request)
     if error:
@@ -179,14 +179,14 @@ def submit_papaw_count():
     return jsonify({'count': count})
 
 
-@app.route('/predictBellPepperSeedCount', methods=['POST'])
-def submit_bellpepper_count():
+@app.route('/predictEXIF', methods=['POST'])
+def submit_exif():
     filename, error = handle_file_upload(request)
     if error:
         return jsonify(error)
-    count = get_bellpepper_count(filename)
-    return jsonify({'count': count})
+    metadata = get_image_metadata('uploads/' + filename)
+    return jsonify({'metadata': metadata})
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='192.168.84.24', port=4000)
