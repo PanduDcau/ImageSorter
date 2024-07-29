@@ -1,6 +1,6 @@
 from geopy.geocoders import Nominatim
 from tensorflow.keras.models import load_model
-from PIL import Image, ImageOps, ExifTags  # Install pillow instead of PIL
+from PIL import Image, ImageOps, ExifTags
 import numpy as np
 #from teachable_machine import TeachableMachine
 import json
@@ -10,92 +10,88 @@ import uuid
 import cv2
 
 # Mango subcategory A
-MANGO_SUBCATEGORY_A_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
-MANGO_SUBCATEGORY_A_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
-MANGO_SUBCATEGORY_A_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
-MANGO_SUBCATEGORY_A_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
-MANGO_SUBCATEGORY_A_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
-MANGO_SUBCATEGORY_A_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
-MANGO_SUBCATEGORY_A_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
-MANGO_SUBCATEGORY_A_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_A_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
+MANGO_SUBCATEGORY_Mango_A_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_A_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
+MANGO_SUBCATEGORY_Mango_A_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_A_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
+MANGO_SUBCATEGORY_Mango_A_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_A_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
+MANGO_SUBCATEGORY_Mango_A_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
 
 # Mango subcategory B
-MANGO_SUBCATEGORY_B_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
-MANGO_SUBCATEGORY_B_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
-MANGO_SUBCATEGORY_B_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
-MANGO_SUBCATEGORY_B_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
-MANGO_SUBCATEGORY_B_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
-MANGO_SUBCATEGORY_B_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
-MANGO_SUBCATEGORY_B_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
-MANGO_SUBCATEGORY_B_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_B_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
+MANGO_SUBCATEGORY_Mango_B_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_B_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
+MANGO_SUBCATEGORY_Mango_B_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_B_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
+MANGO_SUBCATEGORY_Mango_B_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_B_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
+MANGO_SUBCATEGORY_Mango_B_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
 
 # Mango subcategory C
-MANGO_SUBCATEGORY_C_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
-MANGO_SUBCATEGORY_C_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
-MANGO_SUBCATEGORY_C_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
-MANGO_SUBCATEGORY_C_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
-MANGO_SUBCATEGORY_C_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
-MANGO_SUBCATEGORY_C_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
-MANGO_SUBCATEGORY_C_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
-MANGO_SUBCATEGORY_C_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_C_COLOUR_MODEL_PATH = 'models/mango_colour_model.h5'
+MANGO_SUBCATEGORY_Mango_C_COLOUR_MODEL_LABELS_PATH = 'models/mango_colour_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_C_SIZE_MODEL_PATH = 'models/mango_size_model.h5'
+MANGO_SUBCATEGORY_Mango_C_SIZE_MODEL_LABELS_PATH = 'models/mango_size_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_C_SHAPE_MODEL_PATH = 'models/mango_shape_model.h5'
+MANGO_SUBCATEGORY_Mango_C_SHAPE_MODEL_LABELS_PATH = 'models/mango_shape_model_labels.txt'
+MANGO_SUBCATEGORY_Mango_C_SURFACE_MODEL_PATH = 'models/mango_surface_model.h5'
+MANGO_SUBCATEGORY_Mango_C_SURFACE_MODEL_LABELS_PATH = 'models/mango_surface_model_labels.txt'
 
 # Apple subcategory A
-APPLE_SUBCATEGORY_A_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
-APPLE_SUBCATEGORY_A_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
-APPLE_SUBCATEGORY_A_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
-APPLE_SUBCATEGORY_A_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
-APPLE_SUBCATEGORY_A_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
-APPLE_SUBCATEGORY_A_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
-APPLE_SUBCATEGORY_A_SURFACE_MODEL_PATH = 'models/apple_surface_model.h5'
-APPLE_SUBCATEGORY_A_SURFACE_MODEL_LABELS_PATH = 'models/apple_surface_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_A_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
+APPLE_SUBCATEGORY_Apple_A_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_A_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
+APPLE_SUBCATEGORY_Apple_A_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_A_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
+APPLE_SUBCATEGORY_Apple_A_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
 
 # Apple subcategory B
-APPLE_SUBCATEGORY_B_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
-APPLE_SUBCATEGORY_B_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
-APPLE_SUBCATEGORY_B_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
-APPLE_SUBCATEGORY_B_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
-APPLE_SUBCATEGORY_B_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
-APPLE_SUBCATEGORY_B_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_B_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
+APPLE_SUBCATEGORY_Apple_B_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_B_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
+APPLE_SUBCATEGORY_Apple_B_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_B_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
+APPLE_SUBCATEGORY_Apple_B_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
 
 # Apple subcategory C
-APPLE_SUBCATEGORY_C_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
-APPLE_SUBCATEGORY_C_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
-APPLE_SUBCATEGORY_C_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
-APPLE_SUBCATEGORY_C_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
-APPLE_SUBCATEGORY_C_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
-APPLE_SUBCATEGORY_C_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
-APPLE_SUBCATEGORY_C_SURFACE_MODEL_PATH = 'models/apple_surface_model.h5'
-APPLE_SUBCATEGORY_C_SURFACE_MODEL_LABELS_PATH = 'models/apple_surface_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_C_COLOUR_MODEL_PATH = 'models/apple_colour_model.h5'
+APPLE_SUBCATEGORY_Apple_C_COLOUR_MODEL_LABELS_PATH = 'models/apple_colour_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_C_SIZE_MODEL_PATH = 'models/apple_size_model.h5'
+APPLE_SUBCATEGORY_Apple_C_SIZE_MODEL_LABELS_PATH = 'models/apple_size_model_labels.txt'
+APPLE_SUBCATEGORY_Apple_C_SHAPE_MODEL_PATH = 'models/apple_shape_model.h5'
+APPLE_SUBCATEGORY_Apple_C_SHAPE_MODEL_LABELS_PATH = 'models/apple_shape_model_labels.txt'
 
 # Strawberry subcategory A
-STRAWBERRY_SUBCATEGORY_A_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
-STRAWBERRY_SUBCATEGORY_A_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_A_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
-STRAWBERRY_SUBCATEGORY_A_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_A_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
-STRAWBERRY_SUBCATEGORY_A_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_A_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
-STRAWBERRY_SUBCATEGORY_A_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_A_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
 
 # Strawberry subcategory B
-STRAWBERRY_SUBCATEGORY_B_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
-STRAWBERRY_SUBCATEGORY_B_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_B_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
-STRAWBERRY_SUBCATEGORY_B_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_B_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
-STRAWBERRY_SUBCATEGORY_B_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_B_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
-STRAWBERRY_SUBCATEGORY_B_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_B_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
 
 # Strawberry subcategory C
-STRAWBERRY_SUBCATEGORY_C_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
-STRAWBERRY_SUBCATEGORY_C_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_C_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
-STRAWBERRY_SUBCATEGORY_C_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_C_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
-STRAWBERRY_SUBCATEGORY_C_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
-STRAWBERRY_SUBCATEGORY_C_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
-STRAWBERRY_SUBCATEGORY_C_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_COLOUR_MODEL_PATH = 'models/strawberry_colour_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_COLOUR_MODEL_LABELS_PATH = 'models/strawberry_colour_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SIZE_MODEL_PATH = 'models/strawberry_size_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SIZE_MODEL_LABELS_PATH = 'models/strawberry_size_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SHAPE_MODEL_PATH = 'models/strawberry_shape_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SHAPE_MODEL_LABELS_PATH = 'models/strawberry_shape_model_labels.txt'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
+STRAWBERRY_SUBCATEGORY_Strawberry_C_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
 
 # BellPepper
 BELL_PEPPER_DISEASE_MODEL_PATH = 'models/bellpepper_disease_model.h5'
@@ -107,80 +103,14 @@ BELL_PEPPER_MAGNESIUM_MODEL_LABELS_PATH = 'models/bellpepper_initial_model_label
 BELL_PEPPER_POWDERY_MODEL_PATH = 'models/bellpepper_initial_severe_model.h5'
 BELL_PEPPER_POWDERY_MODEL_LABELS_PATH = 'models/bellpepper_initial_severe_model_labels.txt'
 
-rf = Roboflow(api_key="#")
+rf = Roboflow(api_key="zpJpqip0iN5TpMWJPaM2")
 project = rf.workspace().project("pepper-segmentation")
 model = project.version(1).model
 
 
-# Apple methods
-def getAppleClPrediction(filename, subcategory):
-    model_path = f'APPLE_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH'
-    labels_path = f'APPLE_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH'
-
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getAppleShPrediction(filename, subcategory):
-    model_path = f'APPLE_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH'
-    labels_path = f'APPLE_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH'
-
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getAppleSiPrediction(filename, subcategory):
-    model_path = f'APPLE_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH'
-    labels_path = f'APPLE_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-# Strawberry methods
-def getStrawberryClPrediction(filename, subcategory):
-    model_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH'
-    labels_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getStrawberryShPrediction(filename, subcategory):
-    model_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH'
-    labels_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getStrawberrySiPrediction(filename, subcategory):
-    model_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH'
-    labels_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getStrawberrySurPrediction(filename, subcategory):
-    model_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SURFACE_MODEL_PATH'
-    labels_path = f'STRAWBERRY_SUBCATEGORY_{subcategory}_SURFACE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-# Mango methods
-def getMangoClPrediction(filename, subcategory):
-    model_path = f'MANGO_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH'
-    labels_path = f'MANGO_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getMangoShPrediction(filename, subcategory):
-    model_path = f'MANGO_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH'
-    labels_path = f'MANGO_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getMangoSiPrediction(filename, subcategory):
-    model_path = f'MANGO_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH'
-    labels_path = f'MANGO_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
-
-
-def getMangoSurPrediction(filename, subcategory):
-    model_path = f'MANGO_SUBCATEGORY_{subcategory}_SURFACE_MODEL_PATH'
-    labels_path = f'MANGO_SUBCATEGORY_{subcategory}_SURFACE_MODEL_LABELS_PATH'
-    return getPrediction(filename, model_path, labels_path)
+# Utility function to sanitize subcategory
+def sanitize_subcategory(subcategory):
+    return subcategory.replace(" ", "_")
 
 
 # General prediction method
@@ -209,138 +139,170 @@ def getPrediction(filename, model_path, labels_path):
 
         print("Class:", class_name[2:], end="")
         print("Confidence Score:", confidence_score)
-        return class_name, confidence_score
+        return class_name.strip(), confidence_score
     except Exception as e:
         print(f"Error in getPrediction: {e}")
         raise
 
 
-# BellPepper methods (unchanged)
+# Apple methods
+def getAppleClPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH')
+        labels_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getAppleShPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH')
+        labels_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getAppleSiPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH')
+        labels_path = eval(f'APPLE_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+# Strawberry methods
+def getStrawberryClPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH')
+        labels_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getStrawberryShPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH')
+        labels_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getStrawberrySiPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH')
+        labels_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getStrawberrySurPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SURFACE_MODEL_PATH')
+        labels_path = eval(f'STRAWBERRY_SUBCATEGORY_{subcategory}_SURFACE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+# Mango methods
+def getMangoClPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH')
+        labels_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getMangoShPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SHAPE_MODEL_PATH')
+        labels_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SHAPE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getMangoSiPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH')
+        labels_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getMangoSurPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SURFACE_MODEL_PATH')
+        labels_path = eval(f'MANGO_SUBCATEGORY_{subcategory}_SURFACE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+# BellPepper methods
 def getBellPepperDisPrediction(filename):
     try:
-        np.set_printoptions(suppress=True)
-        model = load_model(BELL_PEPPER_DISEASE_MODEL_PATH, compile=False)
-        class_names = open(BELL_PEPPER_DISEASE_MODEL_LABELS_PATH, "r").readlines()
-
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        image_path = 'uploads/' + filename
-        openImage = Image.open(image_path).convert("RGB")
-        size = (224, 224)
-        image = ImageOps.fit(openImage, size, Image.Resampling.LANCZOS)
-        image_array = np.asarray(image)
-        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-        data[0] = normalized_image_array
-
-        prediction = model.predict(data)
-        index = np.argmax(prediction)
-        class_name = class_names[index]
-        confidence_score = prediction[0][index]
-
-        # Convert numpy float32 to Python float
-        confidence_score = round(float(confidence_score), 2)
-
-        print("Class:", class_name[2:], end="")
-        print("Confidence Score:", confidence_score)
-        return class_name, confidence_score
-    except Exception as e:
-        print(f"Error in getBellPepperDisPrediction: {e}")
+        return getPrediction(filename, BELL_PEPPER_DISEASE_MODEL_PATH, BELL_PEPPER_DISEASE_MODEL_LABELS_PATH)
+    except NameError:
+        print("Bell Pepper disease model path not found.")
         raise
 
 
 def getBellPepperHealthPrediction(filename):
     try:
-        np.set_printoptions(suppress=True)
-        model = load_model(BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_PATH, compile=False)
-        class_names = open(BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH, "r").readlines()
-
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        image_path = 'uploads/' + filename
-        openImage = Image.open(image_path).convert("RGB")
-        size = (224, 224)
-        image = ImageOps.fit(openImage, size, Image.Resampling.LANCZOS)
-        image_array = np.asarray(image)
-        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-        data[0] = normalized_image_array
-
-        prediction = model.predict(data)
-        index = np.argmax(prediction)
-        class_name = class_names[index]
-        confidence_score = prediction[0][index]
-
-        # Convert numpy float32 to Python float
-        confidence_score = round(float(confidence_score), 2)
-
-        print("Class:", class_name[2:], end="")
-        print("Confidence Score:", confidence_score)
-        return class_name, confidence_score
-    except Exception as e:
-        print(f"Error in getBellPepperHealthPrediction: {e}")
+        return getPrediction(filename, BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_PATH, BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH)
+    except NameError:
+        print("Bell Pepper health model path not found.")
         raise
 
 
 def getBellPepperMagPrediction(filename):
     try:
-        np.set_printoptions(suppress=True)
-        model = load_model(BELL_PEPPER_MAGNESIUM_MODEL_PATH, compile=False)
-        class_names = open(BELL_PEPPER_MAGNESIUM_MODEL_LABELS_PATH, "r").readlines()
-
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        image_path = 'uploads/' + filename
-        openImage = Image.open(image_path).convert("RGB")
-        size = (224, 224)
-        image = ImageOps.fit(openImage, size, Image.Resampling.LANCZOS)
-        image_array = np.asarray(image)
-        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-        data[0] = normalized_image_array
-
-        prediction = model.predict(data)
-        index = np.argmax(prediction)
-        class_name = class_names[index]
-        confidence_score = prediction[0][index]
-
-        # Convert numpy float32 to Python float
-        confidence_score = round(float(confidence_score), 2)
-
-        print("Class:", class_name[2:], end="")
-        print("Confidence Score:", confidence_score)
-        return class_name, confidence_score
-    except Exception as e:
-        print(f"Error in getBellPepperMagPrediction: {e}")
+        return getPrediction(filename, BELL_PEPPER_MAGNESIUM_MODEL_PATH, BELL_PEPPER_MAGNESIUM_MODEL_LABELS_PATH)
+    except NameError:
+        print("Bell Pepper magnesium model path not found.")
         raise
 
 
 def getBellPepperPowPrediction(filename):
     try:
-        np.set_printoptions(suppress=True)
-        model = load_model(BELL_PEPPER_POWDERY_MODEL_PATH, compile=False)
-        class_names = open(BELL_PEPPER_POWDERY_MODEL_LABELS_PATH, "r").readlines()
-
-        data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
-        image_path = 'uploads/' + filename
-        openImage = Image.open(image_path).convert("RGB")
-        size = (224, 224)
-        image = ImageOps.fit(openImage, size, Image.Resampling.LANCZOS)
-        image_array = np.asarray(image)
-        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-        data[0] = normalized_image_array
-
-        prediction = model.predict(data)
-        index = np.argmax(prediction)
-        class_name = class_names[index]
-        confidence_score = prediction[0][index]
-
-        # Convert numpy float32 to Python float
-        confidence_score = round(float(confidence_score), 2)
-
-        print("Class:", class_name[2:], end="")
-        print("Confidence Score:", confidence_score)
-        return class_name, confidence_score
-    except Exception as e:
-        print(f"Error in getBellPepperPowPrediction: {e}")
+        return getPrediction(filename, BELL_PEPPER_POWDERY_MODEL_PATH, BELL_PEPPER_POWDERY_MODEL_LABELS_PATH)
+    except NameError:
+        print("Bell Pepper powdery model path not found.")
         raise
 
 
-# ExifData class and metadata extraction functions (unchanged)
+# ExifData class and metadata extraction functions
 class ExifData:
     def __init__(self, data):
         self.GPSInfo = data.get('GPSInfo', 'unknown')
@@ -363,7 +325,6 @@ class ExifData:
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.__dict__})"
-
 
 def get_image_metadata(image_path):
     img = Image.open(image_path)
