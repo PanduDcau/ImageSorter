@@ -1,2 +1,0 @@
-0 Healthy Bell Pepper
-1 Not Healthy Bell Pepper
