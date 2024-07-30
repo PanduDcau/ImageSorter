@@ -2,7 +2,7 @@ from geopy.geocoders import Nominatim
 from tensorflow.keras.models import load_model
 from PIL import Image, ImageOps, ExifTags
 import numpy as np
-#from teachable_machine import TeachableMachine
+from teachable_machine import TeachableMachine
 import json
 from tensorflow.keras.models import model_from_json
 from roboflow import Roboflow

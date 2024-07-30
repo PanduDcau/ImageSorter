@@ -8,6 +8,7 @@ from main import getAppleClPrediction, getAppleShPrediction, getAppleSiPredictio
     getBellPepperDisPrediction, getBellPepperHealthPrediction, getBellPepperMagPrediction, getBellPepperPowPrediction, \
     get_image_metadata, get_papaw_count, get_bellpepper_count
 
+
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
@@ -189,4 +190,4 @@ def submit_exif():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='192.168.84.24', port=4000)
+    app.run(debug=True, port=4000)
