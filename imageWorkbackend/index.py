@@ -6,7 +6,8 @@ from main import getAppleClPrediction, getAppleShPrediction, getAppleSiPredictio
     getStrawberryShPrediction, getStrawberrySiPrediction, getStrawberrySurPrediction, \
     getMangoClPrediction, getMangoShPrediction, getMangoSiPrediction, getMangoSurPrediction, \
     getBellPepperDisPrediction, getBellPepperHealthPrediction, getBellPepperMagPrediction, getBellPepperPowPrediction, \
-    get_image_metadata, get_papaw_count, get_bellpepper_count
+    get_image_metadata, get_papaw_count, get_bellpepper_count, getAnthuriumHealthPrediction, getAnthuriumClPrediction, \
+    getAnthuriumSiPrediction
 
 
 @app.route('/', methods=['GET'])
@@ -180,6 +181,33 @@ def submit_papaw_count():
     return jsonify({'count': count})
 
 
+@app.route('/predictAnthuriumHealth/<subcategory>', methods=['POST'])
+def submit_ant_health(subcategory):
+    filename, error = handle_file_upload(request)
+    if error:
+        return jsonify(error)
+    label, acc = getAnthuriumHealthPrediction(filename, subcategory)
+    return jsonify({'label': label, 'probability': acc})
+
+
+@app.route('/predictAnthuriumSi/<subcategory>', methods=['POST'])
+def submit_ant_si(subcategory):
+    filename, error = handle_file_upload(request)
+    if error:
+        return jsonify(error)
+    label, acc = getAnthuriumSiPrediction(filename, subcategory)
+    return jsonify({'label': label, 'probability': acc})
+
+
+@app.route('/predictAnthuriumCl/<subcategory>', methods=['POST'])
+def submit_ant_cl(subcategory):
+    filename, error = handle_file_upload(request)
+    if error:
+        return jsonify(error)
+    label, acc = getAnthuriumClPrediction(filename, subcategory)
+    return jsonify({'label': label, 'probability': acc})
+
+
 @app.route('/predictEXIF', methods=['POST'])
 def submit_exif():
     filename, error = handle_file_upload(request)
@@ -190,4 +218,6 @@ def submit_exif():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=4000)
+    app.run(debug=True, host= '10.22.53.25', port=5000)
+
+# 192.168.1.10 #10.22.53.25

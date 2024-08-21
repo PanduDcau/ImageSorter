@@ -2,7 +2,7 @@ from geopy.geocoders import Nominatim
 from tensorflow.keras.models import load_model
 from PIL import Image, ImageOps, ExifTags
 import numpy as np
-from teachable_machine import TeachableMachine
+#from teachable_machine import TeachableMachine
 import json
 from tensorflow.keras.models import model_from_json
 from roboflow import Roboflow
@@ -93,6 +93,30 @@ STRAWBERRY_SUBCATEGORY_Strawberry_C_SHAPE_MODEL_LABELS_PATH = 'models/strawberry
 STRAWBERRY_SUBCATEGORY_Strawberry_C_SURFACE_MODEL_PATH = 'models/strawberry_surface_model.h5'
 STRAWBERRY_SUBCATEGORY_Strawberry_C_SURFACE_MODEL_LABELS_PATH = 'models/strawberry_surface_model_labels.txt'
 
+# Anthurium subcategory A
+ANTHURIUM_SUBCATEGORY_Anthurium_A_HEALTHY_UNHEALTHY_MODEL_PATH = 'models/healthyAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_A_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH = 'models/healthyAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_A_COLOUR_MODEL_PATH = 'models/colourAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_A_COLOUR_MODEL_LABELS_PATH = 'models/colourAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_A_SIZE_MODEL_PATH = 'models/sizeAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_A_SIZE_MODEL_LABELS_PATH = 'models/sizeAnthurium_labels.txt'
+
+# Anthurium subcategory B
+ANTHURIUM_SUBCATEGORY_Anthurium_B_HEALTHY_UNHEALTHY_MODEL_PATH = 'models/healthyAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_B_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH = 'models/healthyAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_B_COLOUR_MODEL_PATH = 'models/colourAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_B_COLOUR_MODEL_LABELS_PATH = 'models/colourAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_B_SIZE_MODEL_PATH = 'models/sizeAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_B_SIZE_MODEL_LABELS_PATH = 'models/sizeAnthurium_labels.txt'
+
+# Anthurium subcategory C
+ANTHURIUM_SUBCATEGORY_Anthurium_C_HEALTHY_UNHEALTHY_MODEL_PATH = 'models/healthyAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_C_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH = 'models/healthyAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_C_COLOUR_MODEL_PATH = 'models/colourAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_C_COLOUR_MODEL_LABELS_PATH = 'models/colourAnthurium_labels.txt'
+ANTHURIUM_SUBCATEGORY_Anthurium_C_SIZE_MODEL_PATH = 'models/sizeAnthurium.h5'
+ANTHURIUM_SUBCATEGORY_Anthurium_C_SIZE_MODEL_LABELS_PATH = 'models/sizeAnthurium_labels.txt'
+
 # BellPepper
 BELL_PEPPER_DISEASE_MODEL_PATH = 'models/bellpepper_disease_model.h5'
 BELL_PEPPER_DISEASE_MODEL_LABELS_PATH = 'models/bellpepper_disease_model_labels.txt'
@@ -142,6 +166,43 @@ def getPrediction(filename, model_path, labels_path):
         return class_name.strip(), confidence_score
     except Exception as e:
         print(f"Error in getPrediction: {e}")
+        raise
+
+
+# Anthurium methods
+
+
+def getAnthuriumHealthPrediction(filename, subcategory):
+    try:
+        print(f"Received request for Anthurium Health Prediction for {subcategory}")
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_HEALTHY_UNHEALTHY_MODEL_PATH')
+        labels_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getAnthuriumClPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_COLOUR_MODEL_PATH')
+        labels_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_COLOUR_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
+        raise
+
+
+def getAnthuriumSiPrediction(filename, subcategory):
+    try:
+        subcategory = sanitize_subcategory(subcategory)
+        model_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_SIZE_MODEL_PATH')
+        labels_path = eval(f'ANTHURIUM_SUBCATEGORY_{subcategory}_SIZE_MODEL_LABELS_PATH')
+        return getPrediction(filename, model_path, labels_path)
+    except NameError:
+        print(f"Model path for subcategory {subcategory} not found.")
         raise
 
 
@@ -280,7 +341,8 @@ def getBellPepperDisPrediction(filename):
 
 def getBellPepperHealthPrediction(filename):
     try:
-        return getPrediction(filename, BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_PATH, BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH)
+        return getPrediction(filename, BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_PATH,
+                             BELL_PEPPER_HEALTHY_UNHEALTHY_MODEL_LABELS_PATH)
     except NameError:
         print("Bell Pepper health model path not found.")
         raise
@@ -325,6 +387,7 @@ class ExifData:
 
     def __repr__(self):
         return f"{self.__class__.__name__}({self.__dict__})"
+
 
 def get_image_metadata(image_path):
     img = Image.open(image_path)
